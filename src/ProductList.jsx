@@ -1,8 +1,9 @@
 import React, { useState,useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import './ProductList.css'
+import { useDispatch } from 'react-redux';
+import './ProductList.css';
 import CartItem from './CartItem';
-import addItem from './CartSlice'
+import {addItem} from './CartSlice';
+
 function ProductList() {
     const dispatch = useDispatch();
     const [addedToCart, setAddedToCart] = useState({});
@@ -239,24 +240,26 @@ function ProductList() {
    const handleCartClick = (e) => {
     e.preventDefault();
     setShowCart(true); // Set showCart to true when cart icon is clicked
-};
-const handlePlantsClick = (e) => {
+    };
+   const handlePlantsClick = (e) => {
     e.preventDefault();
     setShowPlants(true); // Set showAboutUs to true when "About Us" link is clicked
     setShowCart(false); // Hide the cart when navigating to About Us
-};
+   };
 
    const handleContinueShopping = (e) => {
     e.preventDefault();
     setShowCart(false);
-  };
-  const handleAddToCart = (product) => {
+   };
+   const handleAddToCart = (product) => {
+    console.log(product);
     dispatch(addItem(product));
+    console.log("done");
     setAddedToCart((prevState) => ({
        ...prevState,
        [product.name]: true, // Set the product name as key and value as true to indicate it's added to cart
      }));
-  };
+    };
     return (
         <div>
              <div className="navbar" style={styleObj}>
@@ -290,7 +293,7 @@ const handlePlantsClick = (e) => {
                             <div className="product-price">{plant.cost}</div>
                             <div>{plant.description}</div>
                             {/*Similarly like the above plant.name show other details like description and cost*/}
-                            <button  className="product-button" onClick={() => handleAddToCart(plant)}>Add to Cart</button>
+                            <button  className="product-button" onClick={() => handleAddToCart({name:plant.name,cost:plant.cost,image:plant.image})}>Add to Cart</button>
                         </div>
                         ))}
                     </div>
